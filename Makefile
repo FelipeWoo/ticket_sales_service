@@ -34,6 +34,7 @@ init:
 	$(PYTHON) add -r requirements.txt
 
 run:
+	clear
 	@cd $(SRC_DIR) && $(PYTHON) run main.py
 
 test:
@@ -59,3 +60,8 @@ clean:
 
 reset: clean
 	rm -rf .venv logs
+
+
+schema:
+	@echo "Initializing schema..."
+	$(PYTHON) run sqlite3 src/db/tickets.db < src/db/schema.sql
