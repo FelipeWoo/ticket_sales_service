@@ -9,7 +9,9 @@ class AppConfig(BaseModel):
     name: str
     env: str
     log_level: str
-    root: str
+    root: Path
+    db:Path
+    pdf:Path
 
 
 def get_root() -> str:
@@ -23,11 +25,15 @@ def get_root() -> str:
 def boot(log_name: str) -> AppConfig:
     load_dotenv(override=True)
 
+    root_path = Path(get_root())
+
     config = AppConfig(
         name=os.getenv("APP_NAME", "default"),
         env=os.getenv("APP_ENV", "production"),
         log_level=os.getenv("LOG_LEVEL", "INFO"),
-        root=get_root()
+        root=root_path,
+        db=root_path / "src" / "db" / "tickets.db",
+        pdf=root_path / "exports"
     )
 
     log_dir = Path(config.root) / "logs" / f"{log_name}.log"
