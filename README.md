@@ -1,52 +1,28 @@
-# Template Python Project
+# Sales & Consumption Ticket
 
 ## Overview
 
-This is a general-purpose Python project template designed for rapid development and clean structure.  
-It uses `uv` for dependency management and includes support for logging, environment configuration, testing, linting, static type checking, and Jupyter notebooks.
+Handles point-of-sale logic, invoice generation, and customer receipts.  
+Implements immutable, auditable ticket storage using SQLite and generates PDF exports with only public-facing fields.  
+Supports raw SQL filtering, structured field validation, and an append-only logic.
 
-## Features
+---
 
-- Structured source code in `src/`
-- Logging system with loguru
-- Environment configuration with dotenv
-- Test suite with pytest
-- Code formatting with black and ruff
-- Static type analysis with ty
-- Jupyter notebook support for exploration
-- Makefile with common automation tasks
+## Category
 
-## Requirements
+Sales & Consumption
 
-- Python 3.10 or higher
-- [uv](https://github.com/astral-sh/uv) (package manager)
-- Unix-like system or WSL (recommended)
-
-## Installation
-
-Clone the repository and run:
-
-```bash
-make init
-````
-
-This will create the virtual environment and install all required dependencies.
+---
 
 ## Running the Project
 
 ```bash
 make run
-```
+````
 
-## Environment Configuration
+This command will execute the main program. Make sure your `.env` file and SQLite schema are initialized.
 
-Create a `.env` file based on the provided `.env.example` and customize values as needed.
-
-```dotenv
-APP_NAME=template_python
-APP_ENV=development
-LOG_LEVEL=DEBUG
-```
+---
 
 ## Testing
 
@@ -54,6 +30,11 @@ LOG_LEVEL=DEBUG
 make test
 make cov
 ```
+
+* `make test`: Runs all unit tests using `pytest`
+* `make cov`: Runs tests with coverage report
+
+---
 
 ## Linting and Formatting
 
@@ -63,34 +44,57 @@ make ty
 make check
 ```
 
-## Jupyter Notebooks
+* `make lint`: Lint using `ruff`
+* `make ty`: Static typing check using `pyright` or `mypy`
+* `make check`: Runs all code quality checks
 
-To launch a Jupyter environment:
-
-```bash
-make jupyter
-```
-
-Notebooks are located in `scripts/notebooks/`.
+---
 
 ## Project Structure
 
+```text
+ticket_sales_service/
+├── .private/             # Internal credentials, secrets (excluded from Git)
+├── .venv/                # Virtual environment
+├── docs/                 # Project documentation (logic, specs, stages)
+├── exports/              # PDF exports (public-only ticket representations)
+├── logs/                 # Application log files
+│
+├── src/                  # Main source code
+│   ├── db/               # Database connection and schema
+│   ├── models/           # Ticket data models
+│   ├── services/         # Business logic (create, read, export)
+│   └── utils/            # Shared utilities (logging, boot, validators)
+│
+├── tests/                # All test cases with pytest
+├── scripts/              # Notebooks, importers, and helper scripts
+├── Makefile              # Project commands and automation
+├── .env                  # Environment configuration
+├── .gitignore            # Git ignore rules
+├── pyproject.toml        # Build and tool configuration
+├── requirements.txt      # Python dependencies (for pip)
+├── uv.lock               # Dependency lock for uv
+└── README.md             # Project overview and usage
 ```
-project/
-├── src/                # Main source code
-├── tests/              # Unit tests
-├── scripts/            # Jupyter notebooks and helper scripts
-├── data/               # Input or reference data
-├── logs/               # Application logs
-├── docs/               # Documentation
-├── Makefile            # Command shortcuts
-├── .env                # Environment variables
-├── requirements.txt    # Dependencies
-├── pyproject.toml      # Configuration for tooling
-└── README.md           # Project information
+
+---
+
+## Development Roadmap
+
+The project follows a staged development plan outlined in:
+
 ```
+docs/stages.md
+```
+
+Each stage includes testing activities, features, and commit messages. For full system design and logic, see:
+
+* `docs/specs.md`
+* `docs/logic.md`
+* `docs/workflow.md`
+
+---
 
 ## License
 
 This project is licensed under the terms of the LICENSE file.
-
